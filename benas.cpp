@@ -40,3 +40,45 @@ void naujasFailas(list <mokinys> m, int psk, int k){
     }
     fr1.close();
 }
+
+void nuskaitymas(list <mokinys> &m, int &C, int k){
+    m.push_back(mokinys());
+    list <mokinys> :: iterator it = m.begin();
+    C=0;
+    char c; int words = -3; bool space = true; int ND;
+    int fx=1000*pow(10, k);
+    string name = to_string(fx) + ".txt", vard, pav;
+    ifstream fd(name.c_str());
+    while(fd.get(c) and c!='\n'){           //skaiciuoja kiek nd
+        if(std::isspace(c)){
+            space=true;
+        }
+        else if(space){
+            words++;
+            space=false;
+        }
+    }
+    for(int j=0; j<fx; j++){                       //nuskaito duomenis is failo
+        m.push_back(mokinys());
+        it->n=words;
+        fd >> pav;
+        char P[pav.length()];
+        strcpy(P, pav.c_str());
+        for(int i=0; i<pav.length(); i++)
+            it->pav.push_back(P[i]);
+        fd >> vard;
+        char H[vard.length()];
+        strcpy(H, vard.c_str());
+        for(int i=0; i<vard.length(); i++)
+            it->vard.push_back(H[i]);
+        for(int i=0; i<words; i++){
+            fd >> ND;
+            it->nd.push_back(ND);
+        }
+        fd >> it->e;
+        C++;
+        it++;
+    }
+    m.pop_back();
+    C--;
+}
